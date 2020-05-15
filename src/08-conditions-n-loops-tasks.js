@@ -246,8 +246,8 @@ function getIntervalString(a, b, isStartIncluded, isEndIncluded) {
  * 'rotator' => 'rotator'
  * 'noon' => 'noon'
  */
-function reverseString(/* str */) {
-  throw new Error('Not implemented');
+function reverseString(str) {
+  return str.split('').reverse().join('');
 }
 
 
@@ -263,8 +263,8 @@ function reverseString(/* str */) {
  *   87354 => 45378
  *   34143 => 34143
  */
-function reverseInteger(/* num */) {
-  throw new Error('Not implemented');
+function reverseInteger(num) {
+  return Number(String(num).split('').reverse().join(''));
 }
 
 
@@ -288,8 +288,30 @@ function reverseInteger(/* num */) {
  *   5436468789016589 => false
  *   4916123456789012 => false
  */
-function isCreditCardNumber(/* ccn */) {
-  throw new Error('Not implemented');
+function isCreditCardNumber(ccn) {
+  const arr = String(ccn).split('');
+  if (arr.length % 2 === 0) {
+    for (let i = 0; i < arr.length; i += 2) {
+      arr[i] *= 2;
+      if (arr[i] > 9) {
+        arr[i] -= 9;
+      }
+    }
+  } else {
+    for (let i = 1; i < arr.length; i += 2) {
+      arr[i] *= 2;
+      if (arr[i] > 9) {
+        arr[i] -= 9;
+      }
+    }
+  }
+
+  const sum = arr.reduce((acc, item) => acc + Number(item), 0);
+
+  if (sum % 10 === 0) {
+    return true;
+  }
+  return false;
 }
 
 /**
@@ -306,8 +328,14 @@ function isCreditCardNumber(/* ccn */) {
  *   10000 ( 1+0+0+0+0 = 1 ) => 1
  *   165536 (1+6+5+5+3+6 = 26,  2+6 = 8) => 8
  */
-function getDigitalRoot(/* num */) {
-  throw new Error('Not implemented');
+function getDigitalRoot(num) {
+  if (String(num).length === 1) return num;
+  let sum = 0;
+  for (let i = 0; i < String(num).length; i += 1) {
+    sum += String(num)[i] * 1;
+  }
+
+  return getDigitalRoot(sum);
 }
 
 
@@ -332,8 +360,28 @@ function getDigitalRoot(/* num */) {
  *   '{)' = false
  *   '{[(<{[]}>)]}' = true
  */
-function isBracketsBalanced(/* str */) {
-  throw new Error('Not implemented');
+function isBracketsBalanced(str) {
+  let newStr = str;
+  for (let i = 0; i < newStr.length - 1; i += 1) {
+    if (newStr[i] === '[' && newStr[i + 1] === ']') {
+      newStr = newStr.slice(0, i) + newStr.slice(i + 2);
+      i = -1;
+    }
+    if (newStr[i] === '{' && newStr[i + 1] === '}') {
+      newStr = newStr.slice(0, i) + newStr.slice(i + 2);
+      i = -1;
+    }
+    if (newStr[i] === '<' && newStr[i + 1] === '>') {
+      newStr = newStr.slice(0, i) + newStr.slice(i + 2);
+      i = -1;
+    }
+    if (newStr[i] === '(' && newStr[i + 1] === ')') {
+      newStr = newStr.slice(0, i) + newStr.slice(i + 2);
+      i = -1;
+    }
+  }
+
+  return newStr.length === 0;
 }
 
 
